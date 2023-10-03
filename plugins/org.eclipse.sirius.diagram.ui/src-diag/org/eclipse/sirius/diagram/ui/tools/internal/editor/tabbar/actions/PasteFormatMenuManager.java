@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.actions;
 
-import org.eclipse.gmf.runtime.common.ui.action.ActionMenuManager;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.sirius.diagram.ui.provider.DiagramUIPlugin;
@@ -26,7 +25,7 @@ import org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds;
  * 
  * @author <a href="mailto:laurent.redor@obeo.fr">Laurent Redor</a>
  */
-public class PasteFormatMenuManager extends ActionMenuManager {
+public class PasteFormatMenuManager extends ActionMenuManagerExperimental {
 
     /**
      * The paste format menu action containing the UI for the paste format menu

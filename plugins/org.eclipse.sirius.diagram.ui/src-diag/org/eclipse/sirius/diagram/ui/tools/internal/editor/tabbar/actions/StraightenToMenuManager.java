@@ -15,7 +15,6 @@ package org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.actions;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.eclipse.gmf.runtime.common.ui.action.ActionMenuManager;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -35,7 +34,7 @@ import org.eclipse.ui.IWorkbenchPage;
  * 
  * @author <a href="mailto:laurent.redor@obeo.fr">Laurent Redor</a>
  */
-public class StraightenToMenuManager extends ActionMenuManager {
+public class StraightenToMenuManager extends ActionMenuManagerExperimental {
 
     /**
      * The straighten menu action containing the UI for the straighten menu manager

@@ -15,7 +15,6 @@ package org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.contributions
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.eclipse.gmf.runtime.common.ui.action.ActionMenuManager;
 import org.eclipse.gmf.runtime.common.ui.action.IDisposableAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -31,6 +30,7 @@ import org.eclipse.sirius.diagram.ui.tools.api.image.DiagramImagesPath;
 import org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds;
 import org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.LayoutingModeSwitchingAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.VisibilityModeSwitchingAction;
+import org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.actions.ActionMenuManagerExperimental;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -40,7 +40,7 @@ import org.eclipse.ui.IWorkbenchPage;
  * @author <a href="mailto:pierre.guilet@obeo.fr">Pierre Guilet</a>
  *
  */
-public class ModesMenuManager extends ActionMenuManager {
+public class ModesMenuManager extends ActionMenuManagerExperimental {
 
     /**
      * The default mode menu action containing the UI for the straighten menu manager
