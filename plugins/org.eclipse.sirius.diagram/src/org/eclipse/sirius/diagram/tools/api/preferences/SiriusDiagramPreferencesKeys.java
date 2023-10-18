@@ -44,7 +44,12 @@ public enum SiriusDiagramPreferencesKeys {
     /**
      * Says if the generic edge creation tool should be displayed in the palette.
      */
-    PREF_DISPLAY_GENERIC_EDGE_CREATION_TOOL(boolean.class);
+    PREF_DISPLAY_GENERIC_EDGE_CREATION_TOOL(boolean.class),
+
+    /**
+     * Says if the layout commands move pinned elements.
+     */
+    PREF_MOVE_PINNED_ELEMENTS(boolean.class);
 
     /** The type of the preference. */
     private Class<?> type;

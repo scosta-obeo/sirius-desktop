@@ -31,7 +31,6 @@ import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
-import org.eclipse.sirius.diagram.tools.api.layout.PinHelper;
 import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractDiagramElementContainerEditPart;
 import org.eclipse.sirius.diagram.ui.edit.api.part.IDiagramBorderNodeEditPart;
 import org.eclipse.sirius.diagram.ui.edit.api.part.IDiagramContainerEditPart;
@@ -123,11 +122,10 @@ public class PinnedElementsLayoutProvider extends DefaultLayoutProvider {
     }
 
     private void adjustAutoSizedContainers(final Map<IGraphicalEditPart, Rectangle> initialBounds, ArrayList<IDiagramElementEditPart> elementstToKeepFixed) {
-        PinHelper pinHelper = new PinHelper();
         for (Entry<IGraphicalEditPart, Rectangle> entry : initialBounds.entrySet()) {
             if (entry.getKey() instanceof AbstractDiagramElementContainerEditPart) {
                 final AbstractDiagramElementContainerEditPart container = (AbstractDiagramElementContainerEditPart) entry.getKey();
-                if (!pinHelper.isPinned(container.resolveDiagramElement()) && !elementstToKeepFixed.contains(container)) {
+                if (!isPinned(container) && !elementstToKeepFixed.contains(container)) {
                     final Rectangle bounds = entry.getValue().getCopy();
                     final Rectangle autoSizedBounds = container.getAutosizedDimensions();
                     bounds.setWidth(autoSizedBounds.width);
