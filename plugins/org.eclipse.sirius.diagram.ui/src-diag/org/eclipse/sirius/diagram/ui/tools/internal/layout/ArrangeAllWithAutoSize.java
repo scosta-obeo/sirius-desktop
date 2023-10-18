@@ -54,6 +54,7 @@ import org.eclipse.sirius.diagram.ui.internal.edit.parts.SquareEditPart;
 import org.eclipse.sirius.diagram.ui.internal.operation.RegionContainerUpdateLayoutOperation;
 import org.eclipse.sirius.diagram.ui.internal.view.factories.AbstractContainerViewFactory;
 import org.eclipse.sirius.diagram.ui.provider.DiagramUIPlugin;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.edit.command.CommandFactory;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.AbstractCompositeLayoutProvider;
 import org.eclipse.sirius.diagram.ui.tools.internal.preferences.SiriusDiagramUiInternalPreferencesKeys;
@@ -91,12 +92,15 @@ public class ArrangeAllWithAutoSize {
     }
 
     private static boolean isPinned(final IGraphicalEditPart part) {
-        if (part instanceof IDiagramElementEditPart) {
-            IDiagramElementEditPart diagramElementEditPart = (IDiagramElementEditPart) part;
-            DDiagramElement dDiagramElement = diagramElementEditPart.resolveDiagramElement();
-            return new PinHelper().isPinned(dDiagramElement);
+        if (MovePinnedElementsAction.getValue()) {
+            return false;
+        } else {
+            boolean isPinned = false;
+            if (part.resolveSemanticElement() instanceof DDiagramElement dDiagramElement) {
+                isPinned = new PinHelper().isPinned(dDiagramElement);
+            }
+            return isPinned;
         }
-        return false;
     }
 
     /**

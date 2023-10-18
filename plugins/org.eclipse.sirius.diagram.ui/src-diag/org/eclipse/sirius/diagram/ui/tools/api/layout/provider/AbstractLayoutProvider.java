@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -43,7 +44,9 @@ import org.eclipse.sirius.common.tools.DslCommonPlugin;
 import org.eclipse.sirius.common.tools.api.profiler.ProfilerTask;
 import org.eclipse.sirius.common.ui.SiriusTransPlugin;
 import org.eclipse.sirius.diagram.DDiagramElement;
+import org.eclipse.sirius.diagram.tools.api.DiagramPlugin;
 import org.eclipse.sirius.diagram.tools.api.layout.PinHelper;
+import org.eclipse.sirius.diagram.tools.api.preferences.SiriusDiagramPreferencesKeys;
 import org.eclipse.sirius.diagram.ui.provider.Messages;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.LayoutService;
 
@@ -311,12 +314,16 @@ public abstract class AbstractLayoutProvider extends AbstractLayoutEditPartProvi
      *         pinned.
      */
     protected boolean isPinned(final IGraphicalEditPart part) {
-        boolean isPinned = false;
-        if (part.resolveSemanticElement() instanceof DDiagramElement) {
-            DDiagramElement dDiagramElement = (DDiagramElement) part.resolveSemanticElement();
-            isPinned = new PinHelper().isPinned(dDiagramElement);
+        final String prefKey = SiriusDiagramPreferencesKeys.PREF_MOVE_PINNED_ELEMENTS.name();
+        if (Platform.getPreferencesService().getBoolean(DiagramPlugin.ID, prefKey, false, null)) {
+            return false;
+        } else {
+            boolean isPinned = false;
+            if (part.resolveSemanticElement() instanceof DDiagramElement dDiagramElement) {
+                isPinned = new PinHelper().isPinned(dDiagramElement);
+            }
+            return isPinned;
         }
-        return isPinned;
     }
 
     /**
@@ -521,7 +528,7 @@ public abstract class AbstractLayoutProvider extends AbstractLayoutEditPartProvi
         }
         var iterChildren = root.getChildren().iterator();
         while (iterChildren.hasNext()) {
-            final EditPart next = (EditPart) iterChildren.next();
+            final EditPart next = iterChildren.next();
             editParts.addAll(getAllEditParts(next));
         }
         return new ArrayList<>(editParts);

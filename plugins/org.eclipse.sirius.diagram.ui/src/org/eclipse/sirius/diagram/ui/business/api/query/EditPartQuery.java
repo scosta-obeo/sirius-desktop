@@ -31,6 +31,7 @@ import org.eclipse.sirius.diagram.ui.internal.edit.parts.AbstractDNodeContainerC
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.AbstractDNodeListCompartmentEditPart;
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.NoteEditPart;
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.SiriusNoteEditPart;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.ext.base.Option;
 
 /**
@@ -104,7 +105,7 @@ public final class EditPartQuery {
         if (!(editPart instanceof SiriusNoteEditPart)) {
             if (editPart.resolveSemanticElement() instanceof DDiagramElement) {
                 DDiagramElement dDiagramElement = (DDiagramElement) editPart.resolveSemanticElement();
-                isMovableByAutomaticLayout = !(new PinHelper().isPinned(dDiagramElement) || (elementsToNotMove != null && elementsToNotMove.contains(editPart)));
+                isMovableByAutomaticLayout = MovePinnedElementsAction.getValue() || !(new PinHelper().isPinned(dDiagramElement) || (elementsToNotMove != null && elementsToNotMove.contains(editPart)));
             }
         } else {
             if (!Platform.getPreferencesService().getBoolean(DiagramPlugin.ID, SiriusDiagramPreferencesKeys.PREF_MOVE_NOTES_DURING_LATOUT.name(), false, null)) {

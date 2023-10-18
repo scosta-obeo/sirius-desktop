@@ -44,6 +44,7 @@ public class DiagramPreferenceInitializer extends AbstractPreferenceInitializer 
         diagramCoreDefaultPreferences.putInt(SiriusDiagramCorePreferences.PREF_JUMP_LINK_TYPE, SiriusDiagramCorePreferences.PREF_JUMP_LINK_TYPE_DEFAULT_VALUE);
         diagramCoreDefaultPreferences.putBoolean(SiriusDiagramCorePreferences.PREF_REVERSE_JUMP_LINK, SiriusDiagramCorePreferences.PREF_REVERSE_JUMP_LINK_DEFAULT_VALUE);
         diagramCoreDefaultPreferences.putBoolean(SiriusDiagramPreferencesKeys.PREF_DISPLAY_GENERIC_EDGE_CREATION_TOOL.name(), true);
+        diagramCoreDefaultPreferences.putBoolean(SiriusDiagramPreferencesKeys.PREF_MOVE_PINNED_ELEMENTS.name(), false);
     }
 
     private boolean getValue(final String key) {

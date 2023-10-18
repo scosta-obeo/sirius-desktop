@@ -61,6 +61,7 @@ import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractDiagramElementContain
 import org.eclipse.sirius.diagram.ui.edit.api.part.IDiagramElementEditPart;
 import org.eclipse.sirius.diagram.ui.tools.api.layout.LayoutExtender;
 import org.eclipse.sirius.diagram.ui.tools.api.layout.provider.ExtendableLayoutProvider;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.ArrangeAllWithAutoSize;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.AutoSizeAndRegionAwareGraphLayout;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.DiagramLayoutCustomization;
@@ -89,6 +90,7 @@ public abstract class AbstractCompositeLayoutProvider extends CompositeLayoutPro
 
     private Predicate<Object> validateAllElementInArrayListAreIDiagramElementEditPart = new Predicate<Object>() {
 
+        @Override
         public boolean apply(Object input) {
             return input instanceof IDiagramElementEditPart;
         }
@@ -123,6 +125,7 @@ public abstract class AbstractCompositeLayoutProvider extends CompositeLayoutPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean handleConnectableListItems() {
         return shouldHandleConnectableListItems();
     }
@@ -130,6 +133,7 @@ public abstract class AbstractCompositeLayoutProvider extends CompositeLayoutPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public Rectangle provideNodeMetrics(final Node node) {
         return getNodeMetrics(node);
     }
@@ -137,6 +141,7 @@ public abstract class AbstractCompositeLayoutProvider extends CompositeLayoutPro
     /**
      * {@inheritDoc}
      */
+    @Override
     public LayoutExtender getExtender() {
         return extender;
     }
@@ -447,11 +452,14 @@ public abstract class AbstractCompositeLayoutProvider extends CompositeLayoutPro
      *         pinned.
      */
     protected boolean isPinned(final IGraphicalEditPart part) {
-        boolean isPinned = false;
-        if (part.resolveSemanticElement() instanceof DDiagramElement) {
-            DDiagramElement dDiagramElement = (DDiagramElement) part.resolveSemanticElement();
-            isPinned = new PinHelper().isPinned(dDiagramElement);
+        if (MovePinnedElementsAction.getValue()) {
+            return false;
+        } else {
+            boolean isPinned = false;
+            if (part.resolveSemanticElement() instanceof DDiagramElement dDiagramElement) {
+                isPinned = new PinHelper().isPinned(dDiagramElement);
+            }
+            return isPinned;
         }
-        return isPinned;
     }
 }
