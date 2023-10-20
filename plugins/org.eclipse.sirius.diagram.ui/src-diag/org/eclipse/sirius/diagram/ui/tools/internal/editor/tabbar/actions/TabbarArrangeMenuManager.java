@@ -33,6 +33,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.common.ui.tools.api.util.EclipseUIUtil;
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.DDiagramEditPart;
 import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.ArrangeBorderNodesAction;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.ArrangeAllOnlyLayoutProvider;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.LayoutService;
 import org.eclipse.ui.ISelectionListener;
@@ -174,6 +175,8 @@ public class TabbarArrangeMenuManager extends ArrangeMenuManager implements ISel
                 ArrangeBorderNodesAction toolBarArrangeBorderNodesAction = ArrangeBorderNodesAction.createToolBarArrangeBorderNodesAction(page);
                 add(toolBarArrangeBorderNodesAction);
 
+                add(new MovePinnedElementsAction());
+
                 disableArrangeSelectionIfNotSupported(toolbarArrangeSelectionAction, (IStructuredSelection) selection);
                 setDefaultAction(toolbarArrangeSelectionAction.getId());
             }
@@ -187,6 +190,8 @@ public class TabbarArrangeMenuManager extends ArrangeMenuManager implements ISel
 
                 ArrangeBorderNodesAction toolBarArrangeBorderNodesAction = ArrangeBorderNodesAction.createToolBarArrangeBorderNodesAction(page);
                 add(toolBarArrangeBorderNodesAction);
+
+                add(new MovePinnedElementsAction());
 
                 setDefaultAction(toolbarArrangeAllAction.getId());
             }
@@ -223,6 +228,7 @@ public class TabbarArrangeMenuManager extends ArrangeMenuManager implements ISel
         remove(ActionIds.ACTION_TOOLBAR_ARRANGE_SELECTION);
         remove(ActionIds.ACTION_TOOLBAR_ARRANGE_ALL);
         remove(org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds.ARRANGE_BORDER_NODES_TOOLBAR);
+        remove(org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds.MOVE_PINNED_ELEMENTS);
     }
 
     /**
