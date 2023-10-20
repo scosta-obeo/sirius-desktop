@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -44,10 +43,9 @@ import org.eclipse.sirius.common.tools.DslCommonPlugin;
 import org.eclipse.sirius.common.tools.api.profiler.ProfilerTask;
 import org.eclipse.sirius.common.ui.SiriusTransPlugin;
 import org.eclipse.sirius.diagram.DDiagramElement;
-import org.eclipse.sirius.diagram.tools.api.DiagramPlugin;
 import org.eclipse.sirius.diagram.tools.api.layout.PinHelper;
-import org.eclipse.sirius.diagram.tools.api.preferences.SiriusDiagramPreferencesKeys;
 import org.eclipse.sirius.diagram.ui.provider.Messages;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.LayoutService;
 
 import com.google.common.collect.Iterables;
@@ -314,8 +312,7 @@ public abstract class AbstractLayoutProvider extends AbstractLayoutEditPartProvi
      *         pinned.
      */
     protected boolean isPinned(final IGraphicalEditPart part) {
-        final String prefKey = SiriusDiagramPreferencesKeys.PREF_MOVE_PINNED_ELEMENTS.name();
-        if (Platform.getPreferencesService().getBoolean(DiagramPlugin.ID, prefKey, false, null)) {
+        if (MovePinnedElementsAction.getValue()) {
             return false;
         } else {
             boolean isPinned = false;

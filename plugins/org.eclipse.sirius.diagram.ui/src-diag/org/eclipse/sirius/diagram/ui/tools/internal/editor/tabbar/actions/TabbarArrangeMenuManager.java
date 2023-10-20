@@ -28,11 +28,13 @@ import org.eclipse.gmf.runtime.diagram.ui.services.layout.AbstractLayoutEditPart
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.common.ui.tools.api.util.EclipseUIUtil;
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.DDiagramEditPart;
 import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.ArrangeBorderNodesAction;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.ArrangeAllOnlyLayoutProvider;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.LayoutService;
 import org.eclipse.ui.ISelectionListener;
@@ -162,35 +164,58 @@ public class TabbarArrangeMenuManager extends ArrangeMenuManager implements ISel
                 arrangeSelection = true;
             }
         }
-
-        if (arrangeSelection) {
-            if (!isArrangeSelectionAndBorderNodes()) {
-                // change to Arrange Selection
-                removeArrangeActions();
-
-                ArrangeAction toolbarArrangeSelectionAction = ArrangeAction.createToolbarArrangeSelectionAction(page);
-                add(toolbarArrangeSelectionAction);
-
-                ArrangeBorderNodesAction toolBarArrangeBorderNodesAction = ArrangeBorderNodesAction.createToolBarArrangeBorderNodesAction(page);
-                add(toolBarArrangeBorderNodesAction);
-
-                disableArrangeSelectionIfNotSupported(toolbarArrangeSelectionAction, (IStructuredSelection) selection);
-                setDefaultAction(toolbarArrangeSelectionAction.getId());
+        
+        if (isEmpty()) { // the menu is empty: first initialization
+            ArrangeAction toolbarArrangeAction;
+            if (arrangeSelection) {
+                toolbarArrangeAction = ArrangeAction.createToolbarArrangeSelectionAction(page);
+                disableArrangeSelectionIfNotSupported(toolbarArrangeAction, (IStructuredSelection) selection);
+            } else {
+                toolbarArrangeAction = ArrangeAction.createToolbarArrangeAllAction(page);
             }
-        } else {
-            if (!isArrangeAllAndBorderNodes()) {
-                // change to Arrange All / Arrange Bordered Nodes
-                removeArrangeActions();
+            
+            add(toolbarArrangeAction);
+            add(ArrangeBorderNodesAction.createToolBarArrangeBorderNodesAction(page));
+            add(new Separator());
+            add(new MovePinnedElementsAction());
 
-                ArrangeAction toolbarArrangeAllAction = ArrangeAction.createToolbarArrangeAllAction(page);
-                add(toolbarArrangeAllAction);
+            setDefaultAction(toolbarArrangeAction.getId());
 
-                ArrangeBorderNodesAction toolBarArrangeBorderNodesAction = ArrangeBorderNodesAction.createToolBarArrangeBorderNodesAction(page);
-                add(toolBarArrangeBorderNodesAction);
+        } else { // the menu is not empty, check for update
+            boolean haveArrangeSelection = find(ActionIds.ACTION_TOOLBAR_ARRANGE_SELECTION) != null;
+            if (haveArrangeSelection != arrangeSelection) { // menu is out of date
+                if (arrangeSelection) {
+                    ArrangeAction toolbarArrangeAction = ArrangeAction.createToolbarArrangeSelectionAction(page);
+                    disableArrangeSelectionIfNotSupported(toolbarArrangeAction, (IStructuredSelection) selection);
 
-                setDefaultAction(toolbarArrangeAllAction.getId());
+                    replaceAction(ActionIds.ACTION_TOOLBAR_ARRANGE_ALL, toolbarArrangeAction);
+                } else {
+                    ArrangeAction toolbarArrangeAction = ArrangeAction.createToolbarArrangeAllAction(page);
+                    replaceAction(ActionIds.ACTION_TOOLBAR_ARRANGE_SELECTION, toolbarArrangeAction);
+                }
             }
         }
+    }
+
+    /**
+     * Insert <code>newAction</code> at the same location as <code>oldActionId</code> and remove
+     * <code>oldActionId</code>. If <code>oldActionId</code> was the default action <code>newAction</code> is the
+     * default action.
+     */
+    private void replaceAction(String oldActionId, IAction newAction) {
+        // insert new
+        insertBefore(oldActionId, newAction); // insert is not overridden for disposable action
+        if (newAction instanceof IDisposableAction dAction) { // We have to do it ourselves
+            dAction.init();
+        }
+
+        // check default action
+        if (getDefaultAction().getId() == oldActionId) {
+            setDefaultAction(newAction.getId());
+        }
+
+        // remove old
+        remove(oldActionId);
     }
 
     @Override
@@ -214,33 +239,6 @@ public class TabbarArrangeMenuManager extends ArrangeMenuManager implements ISel
                 }
             }
         }
-    }
-
-    /**
-     * Remove all "Arrange" actions: - Arrange Selection - Arrange All - Arrange Linked Border Nodes
-     */
-    private void removeArrangeActions() {
-        remove(ActionIds.ACTION_TOOLBAR_ARRANGE_SELECTION);
-        remove(ActionIds.ACTION_TOOLBAR_ARRANGE_ALL);
-        remove(org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds.ARRANGE_BORDER_NODES_TOOLBAR);
-    }
-
-    /**
-     * Check that the only available arrange action is "Arrange Selection"
-     * 
-     * @return true if the only available action is "Arrange Selection"
-     */
-    private boolean isArrangeSelectionAndBorderNodes() {
-        return find(ActionIds.ACTION_TOOLBAR_ARRANGE_SELECTION) != null && find(org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds.ARRANGE_BORDER_NODES_TOOLBAR) != null;
-    }
-
-    /**
-     * Check that there are only two arrange actions when the diagram is selected.
-     * 
-     * @return true id there are only two arrange actions when the diagram is selected
-     */
-    private boolean isArrangeAllAndBorderNodes() {
-        return find(ActionIds.ACTION_TOOLBAR_ARRANGE_ALL) != null && find(org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds.ARRANGE_BORDER_NODES_TOOLBAR) != null;
     }
 
     /**
