@@ -345,7 +345,7 @@
             </popupAction>
             <popupAction path="/selectMenu/selectGroup" id="siriusSelectAllConnectorsAction">
             </popupAction>
-            <popupAction path="/filterFormatGroup" id="toolbarArrangeAllAction">
+            <popupAction path="/filterFormatGroup" id="arrangeAllAction">
             </popupAction>             
         </popupContribution>  
       </contributionItemProvider>
@@ -597,7 +597,7 @@
               path="/arrangeMenu/">
         </popupMenuGroup>
         <popupAction
-              id="toolbarArrangeAllAction"
+              id="arrangeAllAction"
               path="/arrangeMenu/myArrangeGroup">
         </popupAction>
      </popupContribution>
