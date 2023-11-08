@@ -34,6 +34,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.common.ui.tools.api.util.EclipseUIUtil;
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.DDiagramEditPart;
 import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.ArrangeBorderNodesAction;
+import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.LayoutChildrenAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.actions.layout.MovePinnedElementsAction;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.ArrangeAllOnlyLayoutProvider;
 import org.eclipse.sirius.diagram.ui.tools.internal.layout.provider.LayoutService;
@@ -175,6 +176,7 @@ public class TabbarArrangeMenuManager extends ArrangeMenuManager implements ISel
             }
             
             add(toolbarArrangeAction);
+            add(LayoutChildrenAction.createToolbarAction(page));
             add(ArrangeBorderNodesAction.createToolBarArrangeBorderNodesAction(page));
             add(new Separator());
             add(new MovePinnedElementsAction());
