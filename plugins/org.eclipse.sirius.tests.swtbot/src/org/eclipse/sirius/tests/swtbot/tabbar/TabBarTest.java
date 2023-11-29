@@ -107,7 +107,7 @@ public class TabBarTest extends AbstractSiriusSwtBotGefTestCase {
             DistributeAction.getTooltip(DistributeAction.GAPS_HORIZONTALLY), "Straighten to top",
             Messages.EditModeAction_Label, Messages.PasteFormatAction_toolTipText_diagramElements, "Font Color", "Fill &Color", "Li&ne Color", "Line Style" };
 
-    private static final String[] CONTAINER_TOOLBARBUTTONS_TOOLTIPS = { Messages.PinElementsEclipseAction_text, Messages.UnpinElementsEclipseAction_text,
+    private static final String[] CONTAINER_TOOLBARBUTTONS_TOOLTIPS = { Messages.PinElementsEclipseAction_text,
             Messages.CopyFormatAction_toolTipText_diagramElements,
             Messages.SiriusDiagramActionBarContributor_showElement, Messages.SiriusDiagramActionBarContributor_hideElement, Messages.RevealOutlineLabelsAction_label,
             Messages.SiriusDiagramActionBarContributor_hideLabel, Messages.SiriusDiagramActionBarContributor_deleteFromDiagram, Messages.SiriusDiagramActionBarContributor_deleteFromModel, "Font",

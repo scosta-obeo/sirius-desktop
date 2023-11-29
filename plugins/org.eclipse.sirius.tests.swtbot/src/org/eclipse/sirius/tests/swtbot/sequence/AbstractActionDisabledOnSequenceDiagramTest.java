@@ -81,14 +81,6 @@ public abstract class AbstractActionDisabledOnSequenceDiagramTest extends Abstra
     }
 
     /**
-     * Test Unpin action is disabled on tabbar for execution, states, messages, interactionUses, combinedFragments, Lost
-     * messages and found messages.
-     */
-    public void testUnpinFromTabbarOnSequenceDiagramsComponents() {
-        testActionFromTabbarOnSequenceDiagramComponents("The unPin action in tabbar should not be enabled", Messages.UnpinElementsEclipseAction_text);
-    }
-
-    /**
      * Test Hide action is disabled on tabbar for execution, states, messages, interactionUses, combinedFragments, Lost
      * messages and found messages.
      */
