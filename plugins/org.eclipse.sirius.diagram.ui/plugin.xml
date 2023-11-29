@@ -255,7 +255,6 @@
             <popupMenuGroup path="/formatMenu/arrangeMenu/" id="pinGroup" />
             <popupAction path="/formatMenu/arrangeMenu/pinGroup" id="movePinnedElements"/>
             <popupAction path="/formatMenu/arrangeMenu/pinGroup" id="pinElementsAction" />
-            <popupAction path="/formatMenu/arrangeMenu/pinGroup" id="unpinElementsAction" />
             <popupAction path="/formatMenu/arrangeMenu/arrangeGroup" id="layoutChildrenAction"/>
             <popupAction path="/formatMenu/arrangeMenu/arrangeGroup" id="arrangeBorderNodesAction"/>
             <!-- Add distribute action in new distribute group -->
@@ -1120,20 +1119,6 @@
              description="%command.launchRules.description"
              id="org.eclipse.sirius.diagram.ui.launchRules"
              name="%command.launchRules.name">
-       </command>
-       <command
-             categoryId="org.eclipse.sirius.ui.tools.commands"
-             defaultHandler="org.eclipse.sirius.diagram.ui.tools.internal.commands.PinElementsHandler"
-             description="%command.pinElements.description"
-             id="org.eclipse.sirius.diagram.ui.pinElementsCommand"
-             name="%command.pinElements.name">
-       </command>
-       <command
-             categoryId="org.eclipse.sirius.ui.tools.commands"
-             defaultHandler="org.eclipse.sirius.diagram.ui.tools.internal.commands.UnpinElementsHandler"
-             description="%command.unpinElements.description"
-             id="org.eclipse.sirius.diagram.ui.unpinElementsCommand"
-             name="%command.unpinElements.name">
        </command>
        <command
            id="org.eclipse.sirius.diagram.ui.command.revealAllElements"

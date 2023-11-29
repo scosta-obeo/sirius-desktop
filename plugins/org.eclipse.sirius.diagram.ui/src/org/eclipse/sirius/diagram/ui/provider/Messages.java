@@ -1733,9 +1733,6 @@ public final class Messages {
     public static String TreeLayoutSetConnectionAnchorsCommand_nullEdgeInSetConnectionAnchorsCommand;
 
     @TranslatableMessage
-    public static String UnpinElementsEclipseAction_text;
-
-    @TranslatableMessage
     public static String UpdateGMFEdgeStyleCommand_label;
 
     @TranslatableMessage
