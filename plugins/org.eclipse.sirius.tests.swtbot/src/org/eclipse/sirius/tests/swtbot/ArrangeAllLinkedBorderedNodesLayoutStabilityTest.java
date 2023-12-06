@@ -155,7 +155,7 @@ public class ArrangeAllLinkedBorderedNodesLayoutStabilityTest extends AbstractAr
         if (snapToGrid) {
             editor.setSnapToGrid(true, GRID_STEP, 2);
         }
-        editor.clickContextMenu("Arrange All");
+        arrangeAll();
     }
 
     @Override
@@ -600,12 +600,12 @@ public class ArrangeAllLinkedBorderedNodesLayoutStabilityTest extends AbstractAr
         validateInitialPosition("p2", "C21", initialPosition.get("C21"));
         validateInitialPosition("p2", "C22", initialPosition.get("C22"));
 
-        validatePositionOfPortOnContainer("p3", "C31");
-        validatePositionOfPortOnContainer("p3", "C32");
         // Due to a label, grid alignment is not possible for this node.
         // So we force the internal method call to bypass the call to
         // a child method that overrides the behavior by adding the grid check.
-        internalValidatePositionOfPortOnContainer("p3", "C33", false);
+        internalValidatePositionOfPortOnContainer("p3", "C31", false);
+        validatePositionOfPortOnContainer("p3", "C32");
+        validatePositionOfPortOnContainer("p3", "C33");
 
         validatePositionOfPortOnContainer("p4", "C41");
         validatePositionOfPortOnContainer("p4", "C42");
