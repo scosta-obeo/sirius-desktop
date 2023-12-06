@@ -1779,14 +1779,14 @@ public class CompartmentsTest extends AbstractCompartmentTest {
         // Launch arrange all
         ICondition editPartMovedCondition = new CheckEditPartMoved(swtBotEditParts.get(0));
         editor.click(10, 10);
-        editor.clickContextMenu("Arrange All"); //$NON-NLS-1$
+        arrangeAll();
         bot.waitUntil(editPartMovedCondition);
 
         // Check nominal sizes
         checkDefaultTitleBlockInitialSizes(true, new Point(0, 0), 2);
         // Undo
         editPartMovedCondition = new CheckEditPartMoved(swtBotEditParts.get(0));
-        undo("Arrange All"); //$NON-NLS-1$
+        undo(org.eclipse.sirius.diagram.ui.provider.Messages.ArrangeAction_toolbar_ArrangeAll_ActionLabelText);
         bot.waitUntil(editPartMovedCondition);
         // Check nominal sizes
         checkDefaultTitleBlockInitialSizes();
@@ -1814,7 +1814,7 @@ public class CompartmentsTest extends AbstractCompartmentTest {
         // Launch another arrange all to see if the new lines is also correctly arrange
         editPartMovedCondition = new CheckEditPartMoved(swtBotEditParts.get(0));
         editor.click(10, 10);
-        editor.clickContextMenu("Arrange All"); //$NON-NLS-1$
+        arrangeAll();
         bot.waitUntil(editPartMovedCondition);
 
         // Check nominal sizes
@@ -1947,7 +1947,7 @@ public class CompartmentsTest extends AbstractCompartmentTest {
 
         editPartResizedCondition = new CheckEditPartResized(regionsContainer);
         SWTBotUtils.pressKeyboardKey(editor.getCanvas().widget, SWT.ESC);
-        editor.clickContextMenu("Arrange All"); //$NON-NLS-1$
+        arrangeAll();
         bot.waitUntil(editPartResizedCondition);
 
         // Check that sizes are the same that after opening
@@ -2088,7 +2088,7 @@ public class CompartmentsTest extends AbstractCompartmentTest {
 
         editPartResizedCondition = new CheckEditPartResized(regionsContainer);
         SWTBotUtils.pressKeyboardKey(editor.getCanvas().widget, SWT.ESC);
-        editor.clickContextMenu("Arrange All"); //$NON-NLS-1$
+        arrangeAll();
         bot.waitUntil(editPartResizedCondition);
 
         // Check that sizes are the same that after opening

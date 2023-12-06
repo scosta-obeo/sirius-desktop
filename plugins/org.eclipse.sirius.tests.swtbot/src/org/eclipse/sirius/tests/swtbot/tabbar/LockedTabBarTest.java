@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractDiagramContainerEditPart;
 import org.eclipse.sirius.diagram.ui.edit.api.part.IDDiagramEditPart;
+import org.eclipse.sirius.diagram.ui.provider.Messages;
 import org.eclipse.sirius.diagram.ui.tools.internal.editor.tabbar.ExtensionPointTabbarContributorProvider;
 import org.eclipse.sirius.ecore.extender.business.api.accessor.ExtenderConstants;
 import org.eclipse.sirius.ecore.extender.business.api.permission.IPermissionProvider;
@@ -83,11 +84,11 @@ public class LockedTabBarTest extends AbstractSiriusSwtBotGefTestCase {
 
     private static final String SHOW_HIDE = "Show/Hide";
 
-    private static final String ARRANGE_ALL = "Arrange All";
+    private static final String ARRANGE_ALL = Messages.ArrangeAction_toolbar_ArrangeAll_ActionToolTipText;
 
-    private static final String ARRANGE_SELECTION = "Arrange Selection";
+    private static final String ARRANGE_SELECTION = Messages.ArrangeAction_toolbar_ArrangeSelection_ActionToolTipText;
 
-    private static final String ARRANGE_LINKED_BORDER_NODES = "Arrange Linked Border Nodes";
+    private static final String ARRANGE_LINKED_BORDER_NODES = Messages.ArrangeBorderNodesAction_toolTipDiagramText;
 
     private static final String PIN_SELECTION = "Pin selected elements";
 

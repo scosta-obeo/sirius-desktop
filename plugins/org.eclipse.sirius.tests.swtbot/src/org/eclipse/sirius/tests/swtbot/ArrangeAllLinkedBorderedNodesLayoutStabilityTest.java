@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
@@ -32,6 +33,8 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.DDiagramElement;
+import org.eclipse.sirius.diagram.tools.api.DiagramPlugin;
+import org.eclipse.sirius.diagram.tools.api.preferences.SiriusDiagramPreferencesKeys;
 import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractDiagramBorderNodeEditPart;
 import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractDiagramEdgeEditPart;
 import org.eclipse.sirius.tests.swtbot.support.api.business.UIDiagramRepresentation.ZoomLevel;
@@ -40,6 +43,7 @@ import org.eclipse.sirius.tests.swtbot.support.api.business.UIResource;
 import org.eclipse.sirius.tests.swtbot.support.api.editor.SWTBotSiriusDiagramEditor;
 import org.eclipse.sirius.ui.business.api.preferences.SiriusUIPreferencesKeys;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
+import org.eclipse.swtbot.swt.finder.SWTBot;
 
 /**
  * @author smonnier
@@ -151,7 +155,7 @@ public class ArrangeAllLinkedBorderedNodesLayoutStabilityTest extends AbstractAr
         if (snapToGrid) {
             editor.setSnapToGrid(true, GRID_STEP, 2);
         }
-        editor.clickContextMenu("Arrange All");
+        arrangeAll();
     }
 
     @Override
@@ -567,7 +571,10 @@ public class ArrangeAllLinkedBorderedNodesLayoutStabilityTest extends AbstractAr
         validateInitialPosition("p2", "C21", initialPosition.get("C21"));
         validateInitialPosition("p2", "C22", initialPosition.get("C22"));
 
-        validatePositionOfPortOnContainer("p3", "C31");
+        // Due to a label, grid alignment is not possible for this node.
+        // So we force the internal method call to bypass the call to
+        // a child method that overrides the behavior by adding the grid check.
+        internalValidatePositionOfPortOnContainer("p3", "C31", false);
         validatePositionOfPortOnContainer("p3", "C32");
         validatePositionOfPortOnContainer("p3", "C33");
 
@@ -894,10 +901,14 @@ public class ArrangeAllLinkedBorderedNodesLayoutStabilityTest extends AbstractAr
      * @param pinBorderedNodes
      *            true if the port must be pin during the validation of it
      */
-    protected void validatePositionOfPortOnContainer(String containerName, String portName, boolean pinBorderedNodes) { // ,
-        // int
-        // position){
+    protected void validatePositionOfPortOnContainer(String containerName, String portName, boolean pinBorderedNodes) {
+        internalValidatePositionOfPortOnContainer(containerName, portName, pinBorderedNodes);
+    }
 
+    /**
+     * See {@link #validatePositionOfPortOnContainer(String, String, boolean)}
+     */
+    private void internalValidatePositionOfPortOnContainer(String containerName, String portName, boolean pinBorderedNodes) {
         SWTBotGefEditPart swtbotContainerEditPart = editor.getEditPart(containerName);
 
         assertNotNull("No container edit part found with this name", swtbotContainerEditPart);
@@ -925,13 +936,6 @@ public class ArrangeAllLinkedBorderedNodesLayoutStabilityTest extends AbstractAr
         boolean validateEdgeFromPortHaveBendpointsReset = validateEdgeFromPortHaveBendpointsReset(containerEP, portEP);
         assertTrue("The port " + portName + " has an edge that don't have its bendpoints reset " + containerName,
                 validateEdgeFromPortHaveBendpointsReset);
-
-        // boolean validatePositionOfPortOnContainer =
-        // validatePositionOfPortOnContainer(containerEP, portEP, position);
-        //
-        // assertTrue("The port "+portName+" is not in the expected position
-        // relatively to the container "+containerName,
-        // validatePositionOfPortOnContainer);
     }
 
     private boolean validateEdgeFromPortCrossParentContainer(final AbstractBorderedShapeEditPart containerEP,
