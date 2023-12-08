@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.gmf.runtime.common.ui.action.IDisposableAction;
-import org.eclipse.gmf.runtime.common.ui.action.INonRetargetable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -30,7 +29,7 @@ import org.eclipse.sirius.diagram.ui.tools.api.ui.actions.ActionIds;
  * 
  * @author Séraphin Costa
  */
-public class MovePinnedElementsAction extends Action implements IDisposableAction, INonRetargetable {
+public class MovePinnedElementsAction extends Action implements IDisposableAction {
 
     private static final String PREF_KEY = SiriusDiagramPreferencesKeys.PREF_MOVE_PINNED_ELEMENTS.name();
 
